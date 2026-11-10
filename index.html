@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 Free APIs → 5 Portfolio Projects | Rancho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0D0F;
+    --panel:#11161A;
+    --panel-2:#161C21;
+    --line:rgba(255,255,255,0.08);
+    --text:#E8EEF0;
+    --muted:#8D9BA3;
+    --meteo:#38BDF8;
+    --tmdb:#4ADE80;
+    --poke:#FACC15;
+    --nasa:#FB7155;
+    --gh:#A78BFA;
+    --c:#38BDF8;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(900px 500px at 8% -6%, rgba(56,189,248,0.08), transparent 60%),
+      radial-gradient(900px 500px at 96% 4%, rgba(167,139,250,0.08), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px;}
+  a{color:inherit;}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:48px 0 30px;}
+  .brandline{
+    display:flex;align-items:center;gap:10px;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);margin-bottom:20px;
+  }
+  .brandline .dot{width:7px;height:7px;border-radius:50%;background:var(--tmdb);box-shadow:0 0 8px var(--tmdb);}
+  h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(30px,6.2vw,50px);line-height:1.1;margin:0 0 16px;letter-spacing:-0.015em;
+  }
+  h1 .arrow{color:var(--muted);font-weight:500;}
+  h1 .grad{background:linear-gradient(90deg,var(--meteo),var(--tmdb),var(--poke),var(--nasa),var(--gh));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{color:var(--muted);font-size:16.5px;max-width:64ch;margin:0 0 22px;}
+  .sub b{color:var(--text);font-weight:600;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    padding:5px 11px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:var(--panel);
+  }
+  .chip b{color:var(--text);font-weight:600;}
+  .verified{margin-top:16px;font-size:13px;color:var(--muted);}
+  .verified span{color:#FFB454;}
+
+  /* ---------- sticky nav ---------- */
+  nav.nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(10,13,15,0.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  nav.nav .wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 18px;scrollbar-width:none;}
+  nav.nav .wrap::-webkit-scrollbar{display:none;}
+  nav.nav a{
+    flex:0 0 auto;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;
+    padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;
+  }
+  nav.nav a.on{color:var(--text);border-color:rgba(255,255,255,0.28);background:var(--panel-2);}
+
+  /* ---------- sections ---------- */
+  section{padding-top:58px;scroll-margin-top:56px;}
+  .sec-head{
+    display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:22px;
+  }
+  .sec-head h2{font-family:'Space Grotesk',sans-serif;font-size:24px;margin:0;}
+  .sec-head .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);}
+  p{margin:0 0 14px;}
+  h3{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--muted);margin:28px 0 12px;
+  }
+
+  /* ---------- why grid ---------- */
+  .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;}
+  .card .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:6px;}
+  .card .t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15.5px;margin-bottom:6px;line-height:1.3;}
+  .card .d{font-size:13.5px;color:var(--muted);line-height:1.55;}
+  .card code, p code, li code{font-family:'JetBrains Mono',monospace;font-size:0.86em;background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:5px;color:#DDE6EA;}
+
+  /* ---------- code blocks ---------- */
+  .code{background:#0C1114;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:12px 0;}
+  .code-bar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 12px;background:#11181C;border-bottom:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);
+  }
+  .code-bar button{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);
+    background:transparent;border:1px solid var(--line);border-radius:6px;padding:3px 9px;cursor:pointer;
+  }
+  .code-bar button:hover{border-color:rgba(255,255,255,0.3);}
+  .code pre{margin:0;padding:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .code code{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.65;color:#D5DEE2;white-space:pre;display:block;}
+  .tc{color:#62737B;} .ts{color:#9FD8A8;} .tk{color:#C792EA;} .tn{color:#F2A36B;}
+
+  /* ---------- comparison table ---------- */
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);-webkit-overflow-scrolling:touch;}
+  table{border-collapse:collapse;width:100%;min-width:780px;}
+  th,td{padding:12px 14px;text-align:left;font-size:13.5px;border-bottom:1px solid var(--line);vertical-align:top;}
+  thead th{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);background:var(--panel-2);font-weight:600;}
+  tbody tr:last-child td{border-bottom:none;}
+  td.api{font-family:'Space Grotesk',sans-serif;font-weight:600;white-space:nowrap;}
+  td.api i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--c);}
+  td{color:#C9D3D8;}
+
+  /* ---------- API sections ---------- */
+  .api-head{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  .api-num{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:44px;line-height:1;color:var(--c);
+    min-width:62px;
+  }
+  .api-head h2{font-family:'Space Grotesk',sans-serif;font-size:28px;margin:0;line-height:1.15;}
+  .api-head .proj{margin:4px 0 0;color:var(--muted);font-size:14.5px;}
+  .api-head .proj b{color:var(--c);font-weight:600;}
+  .api-wrap{border-left:3px solid var(--c);padding-left:18px;}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 20px;}
+  .fact{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:11px 12px;}
+  .fact span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.08em;margin-bottom:3px;}
+  .fact b{font-size:13px;font-weight:600;line-height:1.35;display:block;}
+  .ep{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;}
+  .ep .m{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;color:var(--c);padding-top:3px;}
+  .ep .p{font-family:'JetBrains Mono',monospace;font-size:12.5px;word-break:break-word;}
+  .ep .p em{display:block;font-style:normal;font-family:'Inter',sans-serif;color:var(--muted);font-size:12.5px;margin-top:1px;}
+  .ep .gap{grid-column:1 / -1;height:1px;background:var(--line);margin:2px 0;}
+
+  .live{margin:6px 0 4px;}
+  .live button{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:#0A0D0F;
+    background:var(--c);border:none;border-radius:8px;padding:9px 14px;cursor:pointer;
+  }
+  .live button:disabled{opacity:0.55;cursor:wait;}
+  .live .hint{font-size:12px;color:var(--muted);margin-left:10px;}
+  .live pre{
+    margin:10px 0 0;padding:12px 14px;background:#0C1114;border:1px solid var(--line);border-radius:10px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;color:#BFE3C8;overflow-x:auto;white-space:pre;
+  }
+
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .tier{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .tier .lab{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:0.06em;
+    padding:3px 9px;border-radius:999px;margin-bottom:10px;
+  }
+  .tier.t1 .lab{background:color-mix(in srgb,var(--c) 22%, transparent);color:var(--c);}
+  .tier.t2 .lab{background:rgba(255,255,255,0.08);color:var(--text);}
+  .tier.t3 .lab{border:1px dashed rgba(255,255,255,0.3);color:var(--muted);}
+  .tier ul{margin:0;padding-left:18px;font-size:13.5px;color:#C2CDD2;}
+  .tier li{margin-bottom:5px;}
+
+  .tags{display:flex;flex-wrap:wrap;gap:7px;}
+  .tag-pill{font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:4px 10px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);color:#C9D3D8;}
+
+  .warn{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.22);border-radius:10px;padding:14px 16px 6px;}
+  .warn ul{margin:0;padding-left:18px;font-size:13.8px;color:#D3D9DC;}
+  .warn li{margin-bottom:9px;}
+  .interview{
+    margin-top:16px;padding:14px 16px;border-radius:10px;
+    background:color-mix(in srgb,var(--c) 9%, var(--panel));border:1px solid color-mix(in srgb,var(--c) 30%, transparent);
+    font-size:14px;
+  }
+  .interview b{color:var(--c);font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+
+  /* ---------- plan ---------- */
+  .plan{display:grid;gap:10px;}
+  .wk{display:grid;grid-template-columns:78px 1fr;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;align-items:start;}
+  .wk .w{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--c);padding-top:2px;}
+  .wk .h{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15.5px;}
+  .wk .h small{font-family:'Inter',sans-serif;font-weight:400;color:var(--muted);font-size:13px;margin-left:6px;}
+  .wk .b{font-size:13.5px;color:#BFCAD0;margin-top:3px;}
+  .note{margin-top:14px;font-size:13.5px;color:var(--muted);}
+
+  .list{margin:0 0 14px;padding-left:20px;font-size:14.5px;color:#CBD5DA;}
+  .list li{margin-bottom:7px;}
+
+  .reality{
+    margin-top:18px;padding:14px 16px;border-radius:10px;
+    background:rgba(255,180,84,0.07);border:1px solid rgba(255,180,84,0.3);
+    font-size:14px;color:#D9DEE0;
+  }
+  .reality b{color:#FFB454;}
+  .reality.big{margin-top:0;padding:18px 20px;font-size:14.5px;}
+  .reality.big ul{margin:10px 0 0;padding-left:20px;}
+  .reality.big li{margin-bottom:7px;}
+
+  footer{
+    margin-top:72px;padding:26px 0 60px;border-top:1px solid var(--line);
+  }
+  footer .row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer .handle{font-family:'JetBrains Mono',monospace;font-size:13.5px;}
+  footer .handle b{color:var(--tmdb);}
+  footer .tagline{color:var(--muted);font-size:13px;}
+  footer .fine{margin-top:16px;font-size:12px;color:var(--muted);line-height:1.6;}
+
+  @media (max-width:760px){
+    .grid6{grid-template-columns:1fr;}
+    .facts{grid-template-columns:repeat(2,1fr);}
+    .tiers{grid-template-columns:1fr;}
+    .api-wrap{padding-left:14px;}
+    .api-num{font-size:36px;min-width:50px;}
+    .api-head h2{font-size:24px;}
+    .wk{grid-template-columns:1fr;gap:4px;}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandline"><span class="dot"></span>@ranchofullstack — Rancho Ka Tohfa</div>
+    <h1>5 Free APIs <span class="arrow">→</span> <span class="grad">5 Portfolio Projects</span></h1>
+    <p class="sub">Todo app, calculator, quiz app — recruiter yeh sab bahut baar dekh chuka hai. Is guide mein 5 free APIs ka complete breakdown hai: <b>endpoints, rate limits, gotchas, project spec aur interview talking points</b> — taaki tumhara project tutorial-copy nahi, real engineering lage.</p>
+    <div class="chips">
+      <span class="chip"><b>5</b> APIs</span>
+      <span class="chip"><b>5</b> weekends</span>
+      <span class="chip"><b>₹0</b> cost</span>
+      <span class="chip"><b>3</b> without key</span>
+    </div>
+    <div class="reality"><b>Zaroori baat:</b> Yeh guide skills aur portfolio banane mein madad karti hai. Isse job milne ki <b>koi guarantee nahi</b> hai. Hiring market, openings, tumhari skills aur interview performance par depend karta hai.</div>
+    <p class="verified"><span>●</span> Limits aur terms Nov 2026 tak verify kiye hain. Providers kabhi bhi badal sakte hain — deploy se pehle official docs ek baar dekh lena.</p>
+  </div>
+</header>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#why">Kya dekhta hai</a>
+    <a href="#compare">Compare</a>
+    <a href="#meteo">01 Open-Meteo</a>
+    <a href="#tmdb">02 TMDB</a>
+    <a href="#poke">03 PokéAPI</a>
+    <a href="#nasa">04 NASA</a>
+    <a href="#github">05 GitHub</a>
+    <a href="#security">API key safety</a>
+    <a href="#plan">5 weekends</a>
+    <a href="#readme">README</a>
+    <a href="#reality">Reality check</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ================= WHY ================= -->
+  <section id="why">
+    <div class="sec-head"><h2>Project ko “portfolio-grade” kya banata hai</h2><span class="tag">API call to sab karte hain</span></div>
+    <p>Recruiter ya interviewer ko yeh nahi dikhna chahiye ki tumne <code>fetch()</code> chalaya. Use dikhna chahiye ki tumne <b>failure, scale aur security</b> ke baare mein socha. Yeh 6 cheezein har project mein daalo:</p>
+    <div class="grid6">
+      <div class="card"><div class="n">01</div><div class="t">States, sirf data nahi</div><div class="d">Loading skeleton, error message, empty result, offline — happy path to sab bana lete hain.</div></div>
+      <div class="card"><div class="n">02</div><div class="t">Debounce + AbortController</div><div class="d">Har keystroke pe request mat bhejo; purani request cancel karo. Yeh race condition fix hai.</div></div>
+      <div class="card"><div class="n">03</div><div class="t">Caching</div><div class="d">Same data baar-baar mat mangao. <code>Map</code>, localStorage ya SWR — rate limit bhi bachta hai.</div></div>
+      <div class="card"><div class="n">04</div><div class="t">Secrets safe</div><div class="d">Key frontend bundle mein nahi. Ek chhota serverless proxy banao (niche section hai).</div></div>
+      <div class="card"><div class="n">05</div><div class="t">Data normalization</div><div class="d">API ka shape ≠ UI ka shape. Ek <code>mapper</code> layer likho jo response ko clean objects mein badle.</div></div>
+      <div class="card"><div class="n">06</div><div class="t">Deploy + README</div><div class="d">Live link, demo GIF, architecture, trade-offs. Bina live link ke project exist hi nahi karta.</div></div>
+    </div>
+
+    <h3>Reusable pattern — teen projects mein kaam aayega</h3>
+    <p style="font-size:14.5px;color:var(--muted);">Open-Meteo, TMDB aur PokéAPI ke search box mein yahi pattern lagao:</p>
+    <script type="text/plain" data-code data-lang="js" data-name="search-pattern.js">
+function debounce(fn, ms = 300) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), ms);
+  };
+}
+
+let controller;
+
+const onInput = debounce(async (q) => {
+  controller?.abort();                      // purani in-flight request cancel
+  controller = new AbortController();
+  try {
+    const res = await fetch(buildUrl(q), { signal: controller.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    render(await res.json());               // DOM update ya setState
+  } catch (e) {
+    if (e.name !== "AbortError") showError(e);  // abort normal hai, error nahi
+  }
+}, 300);
+    </script>
+  </section>
+
+  <!-- ================= COMPARE ================= -->
+  <section id="compare">
+    <div class="sec-head"><h2>Quick comparison</h2><span class="tag">phone pe side-scroll karo →</span></div>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr><th>API</th><th>Key?</th><th>Free limit</th><th>Commercial use</th><th>Attribution</th><th>Level</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="api" style="--c:var(--meteo)"><i></i>Open-Meteo</td><td>No key</td><td>&lt;10,000/day, 5,000/hr, 600/min</td><td>Nahi — free tier non-commercial only</td><td>Required (CC BY 4.0 link)</td><td>Beginner</td></tr>
+          <tr><td class="api" style="--c:var(--tmdb)"><i></i>TMDB</td><td>Free key (Bearer token)</td><td>Daily cap nahi; soft ceiling ~50 req/s</td><td>Non-commercial free; commercial ke liye TMDB se baat</td><td>Required (logo + notice)</td><td>Intermediate</td></tr>
+          <tr><td class="api" style="--c:var(--poke)"><i></i>PokéAPI</td><td>No key</td><td>Koi hard limit nahi; cache karna fair-use rule hai</td><td>Educational/open project</td><td>Nahi, par be nice</td><td>Beginner</td></tr>
+          <tr><td class="api" style="--c:var(--nasa)"><i></i>NASA</td><td>Free key (DEMO_KEY test ke liye)</td><td>DEMO_KEY: 30/hr, 50/day · own key: 1,000/hr</td><td>Mostly open data; APOD images pe copyright ho sakta hai</td><td>Credit do</td><td>Intermediate</td></tr>
+          <tr><td class="api" style="--c:var(--gh)"><i></i>GitHub</td><td>Optional (public data)</td><td>60/hr per IP → 5,000/hr with token</td><td>Public data, GitHub ToS follow karo</td><td>Nahi</td><td>Intermediate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 01 OPEN-METEO ================= -->
+  <section id="meteo" style="--c:var(--meteo)">
+    <div class="api-head">
+      <div class="api-num">01</div>
+      <div><h2>Open-Meteo</h2><p class="proj">Project: <b>Weather app + city search</b> 🌦️</p></div>
+    </div>
+    <div class="api-wrap">
+      <p>Keyless, fast aur CORS-friendly weather API. Forecast 16 din tak, historical data 1940 se, aur air quality bhi milti hai. Is project ki asli skill <b>dependent requests</b> hai: pehle city → coordinates, phir coordinates → forecast.</p>
+
+      <div class="facts">
+        <div class="fact"><span>AUTH</span><b>No key</b></div>
+        <div class="fact"><span>FREE LIMIT</span><b>10k/day · 5k/hr · 600/min</b></div>
+        <div class="fact"><span>TERMS</span><b>Non-commercial + attribution</b></div>
+        <div class="fact"><span>LEVEL</span><b>Beginner</b></div>
+      </div>
+
+      <h3>Endpoints</h3>
+      <div class="ep">
+        <div class="m">GET</div><div class="p">geocoding-api.open-meteo.com/v1/search?name=&amp;count=<em>City name → latitude/longitude</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">api.open-meteo.com/v1/forecast?latitude=&amp;longitude=&amp;current=&amp;hourly=&amp;daily=<em>Current + hourly + daily forecast</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">archive-api.open-meteo.com/v1/archive<em>Historical weather (1940 se)</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">air-quality-api.open-meteo.com/v1/air-quality<em>AQI, PM2.5, PM10 — stretch goal ke liye</em></div>
+      </div>
+
+      <h3>Starter code</h3>
+      <script type="text/plain" data-code data-lang="js" data-name="weather.js">
+// 1) City -> coordinates
+const geo = await fetch(
+  `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=5&language=en`
+).then(r => r.json());
+
+if (!geo.results?.length) throw new Error("City not found");   // 'results' key gayab ho jaati hai
+const { latitude, longitude, name, country } = geo.results[0];
+
+// 2) Coordinates -> forecast
+const url = new URL("https://api.open-meteo.com/v1/forecast");
+url.search = new URLSearchParams({
+  latitude,
+  longitude,
+  current: "temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code",
+  hourly: "temperature_2m,precipitation_probability",
+  daily: "temperature_2m_max,temperature_2m_min,sunrise,sunset",
+  timezone: "auto",
+});
+const wx = await fetch(url).then(r => r.json());
+
+// 3) Parallel arrays ko objects mein zip karo
+const hourly = wx.hourly.time.map((time, i) => ({
+  time,
+  temp: wx.hourly.temperature_2m[i],
+  rainChance: wx.hourly.precipitation_probability[i],
+}));
+      </script>
+
+      <div class="live" data-url="https://api.open-meteo.com/v1/forecast?latitude=17.385&longitude=78.4867&current=temperature_2m,wind_speed_10m&timezone=auto" data-pick="latitude,longitude,timezone,current_units,current">
+        <button type="button">▶ Live try: Hyderabad ka current weather</button><span class="hint">real API call, browser se</span>
+        <pre hidden></pre>
+      </div>
+
+      <h3>Project spec</h3>
+      <div class="tiers">
+        <div class="tier t1"><span class="lab">MVP · DAY 1</span><ul>
+          <li>City search with suggestions</li>
+          <li>Current temp, humidity, wind</li>
+          <li>Loading + “city not found” states</li>
+        </ul></div>
+        <div class="tier t2"><span class="lab">LEVEL-UP · DAY 2</span><ul>
+          <li>7-day forecast + hourly chart</li>
+          <li>°C / °F toggle</li>
+          <li>“Use my location” (Geolocation API)</li>
+          <li>Last 5 searches in localStorage</li>
+        </ul></div>
+        <div class="tier t3"><span class="lab">STRETCH</span><ul>
+          <li>Air-quality tab</li>
+          <li>Compare two cities</li>
+          <li>PWA: last result offline</li>
+        </ul></div>
+      </div>
+
+      <h3>Concepts jo demonstrate honge</h3>
+      <div class="tags"><span class="tag-pill">dependent requests</span><span class="tag-pill">debounce</span><span class="tag-pill">AbortController</span><span class="tag-pill">Geolocation API</span><span class="tag-pill">array zipping</span><span class="tag-pill">PWA / caching</span></div>
+
+      <h3>Gotchas</h3>
+      <div class="warn"><ul>
+        <li>City match na ho to geocoding response mein <code>results</code> key hi nahi hoti — <code>geo.results?.[0]</code> use karo aur empty state dikhao.</li>
+        <li><code>weather_code</code> WMO code hota hai (0 clear, 1–3 cloudy, 45/48 fog, 51–67 drizzle/rain, 71–77 snow, 95+ thunderstorm). Apna mapping table + icons banao; full list Open-Meteo docs mein hai.</li>
+        <li><code>timezone=auto</code> lagao, warna timestamps UTC mein aate hain.</li>
+        <li>Free tier non-commercial hai aur attribution link zaroori hai (“Weather data by Open-Meteo.com”). Ads ya paid product banana ho to paid plan lena padega.</li>
+      </ul></div>
+
+      <div class="interview"><b>Interview mein bolna</b>“Search pe debounce + AbortController lagaya taaki fast typing mein purani response nayi ko overwrite na kare. Geocoding aur forecast ke dependent calls ko ek <code>getWeather(city)</code> function mein wrap kiya.”</div>
+    </div>
+  </section>
+
+  <!-- ================= 02 TMDB ================= -->
+  <section id="tmdb" style="--c:var(--tmdb)">
+    <div class="api-head">
+      <div class="api-num">02</div>
+      <div><h2>TMDB</h2><p class="proj">Project: <b>Movie finder + watchlist</b> 🎬</p></div>
+    </div>
+    <div class="api-wrap">
+      <p>Trending movies, search, posters, cast, trailers, ratings — sab ek jagah. Isme asli seekhne wali cheezein <b>Bearer auth, image URL building, aur <code>append_to_response</code></b> hain. Key free hai, TMDB account → Settings → API se apply karo.</p>
+
+      <div class="facts">
+        <div class="fact"><span>AUTH</span><b>Free key / Bearer token</b></div>
+        <div class="fact"><span>FREE LIMIT</span><b>No daily cap · ~50 req/s ceiling</b></div>
+        <div class="fact"><span>TERMS</span><b>Non-commercial · logo + notice</b></div>
+        <div class="fact"><span>LEVEL</span><b>Intermediate</b></div>
+      </div>
+
+      <h3>Endpoints</h3>
+      <div class="ep">
+        <div class="m">GET</div><div class="p">/3/trending/movie/week<em>Is hafte ki trending movies</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/3/search/movie?query=<em>Title search (paginated)</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/3/movie/{id}?append_to_response=credits,videos<em>Details + cast + trailers, ek hi request mein</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/3/genre/movie/list<em>genre id → naam ka map</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/3/configuration<em>Image base URL + available sizes</em></div>
+      </div>
+
+      <h3>Starter code</h3>
+      <script type="text/plain" data-code data-lang="js" data-name="tmdb.js">
+const TMDB = "https://api.themoviedb.org/3";
+const headers = { Authorization: `Bearer ${TOKEN}`, accept: "application/json" };
+
+// Trending
+const { results } = await fetch(`${TMDB}/trending/movie/week`, { headers }).then(r => r.json());
+
+// Details + cast + trailers — 3 calls ki jagah 1
+const movie = await fetch(
+  `${TMDB}/movie/${id}?append_to_response=credits,videos`, { headers }
+).then(r => r.json());
+
+const trailer = movie.videos.results.find(v => v.site === "YouTube" && v.type === "Trailer");
+const poster = movie.poster_path
+  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+  : "/placeholder.svg";                       // poster_path null ho sakta hai
+
+// genre_ids -> naam
+const { genres } = await fetch(`${TMDB}/genre/movie/list`, { headers }).then(r => r.json());
+const genreMap = Object.fromEntries(genres.map(g => [g.id, g.name]));
+const labels = results[0].genre_ids.map(id => genreMap[id]);
+      </script>
+      <p style="font-size:13.5px;color:var(--muted);">Is project mein live demo button nahi hai kyunki token chahiye — apna free token lekar upar ka code seedha chala sakte ho.</p>
+
+      <h3>Project spec</h3>
+      <div class="tiers">
+        <div class="tier t1"><span class="lab">MVP · DAY 1</span><ul>
+          <li>Trending grid + search</li>
+          <li>Movie detail modal (cast, trailer)</li>
+          <li>Skeleton loaders</li>
+        </ul></div>
+        <div class="tier t2"><span class="lab">LEVEL-UP · DAY 2</span><ul>
+          <li>Watchlist (localStorage first)</li>
+          <li>Genre filter chips</li>
+          <li>Infinite scroll with IntersectionObserver</li>
+        </ul></div>
+        <div class="tier t3"><span class="lab">STRETCH</span><ul>
+          <li>Login + backend watchlist</li>
+          <li>Proxy function for the token</li>
+          <li>“Where to watch” via watch/providers</li>
+        </ul></div>
+      </div>
+      <p class="note">Backend watchlist ka data model: <b>user ↔ movie many-to-many</b> hai, to SQL join table natural fit hai. Sirf <code>tmdb_id</code> store karo, poori movie nahi — metadata TMDB se cache karke lao.</p>
+
+      <h3>Concepts jo demonstrate honge</h3>
+      <div class="tags"><span class="tag-pill">Bearer auth</span><span class="tag-pill">append_to_response</span><span class="tag-pill">pagination</span><span class="tag-pill">IntersectionObserver</span><span class="tag-pill">data normalization</span><span class="tag-pill">serverless proxy</span></div>
+
+      <h3>Gotchas</h3>
+      <div class="warn"><ul>
+        <li><b>Attribution mandatory hai:</b> TMDB logo + yeh notice — “This product uses the TMDB API but is not endorsed or certified by TMDB.” Logo tumhari apni branding se kam prominent rakhna.</li>
+        <li>Free use non-commercial ke liye hai. Paid product ya ads wala app banana ho to TMDB se commercial terms lene padenge.</li>
+        <li><code>poster_path</code> null ho sakta hai — placeholder image zaroor rakho.</li>
+        <li>Movies list mein <code>genre_ids</code> aate hain, naam nahi — upar wala genre map banake join karo.</li>
+        <li>Page parameter 500 tak hi chalta hai — infinite scroll mein <code>page &lt; total_pages</code> check karo.</li>
+        <li>Purana 40 requests/10 sec limit 2019 mein hata diya gaya, par heavy burst pe <code>429</code> ab bhi aa sakta hai — backoff lagao.</li>
+        <li>Token frontend mein dikhta hai (DevTools → Network). Proxy ke liye niche <a href="#security" style="color:var(--c)">API key safety</a> dekho.</li>
+      </ul></div>
+
+      <div class="interview"><b>Interview mein bolna</b>“TMDB token browser mein expose na ho isliye Vercel function proxy banaya — path allowlist aur <code>s-maxage</code> caching ke saath. Detail view ke liye <code>append_to_response</code> se 3 calls ko 1 kiya.”</div>
+    </div>
+  </section>
+
+  <!-- ================= 03 POKEAPI ================= -->
+  <section id="poke" style="--c:var(--poke)">
+    <div class="api-head">
+      <div class="api-num">03</div>
+      <div><h2>PokéAPI</h2><p class="proj">Project: <b>Pokédex + type filter</b> ⚡</p></div>
+    </div>
+    <div class="api-wrap">
+      <p>1000+ Pokémon, stats, types, evolution chains — no key, no signup. Beginner-friendly hai, lekin isme sabse achhe <b>engineering talking points</b> milte hain: N+1 problem, caching, recursion aur set operations.</p>
+
+      <div class="facts">
+        <div class="fact"><span>AUTH</span><b>No key</b></div>
+        <div class="fact"><span>FREE LIMIT</span><b>No hard limit · cache karo</b></div>
+        <div class="fact"><span>TERMS</span><b>Free · fair use policy</b></div>
+        <div class="fact"><span>LEVEL</span><b>Beginner</b></div>
+      </div>
+
+      <h3>Endpoints</h3>
+      <div class="ep">
+        <div class="m">GET</div><div class="p">/api/v2/pokemon?limit=&amp;offset=<em>Paginated list — sirf name + url</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/api/v2/pokemon/{name|id}<em>Stats, types, sprites, abilities</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/api/v2/type/{name}<em>Us type ke saare Pokémon + damage_relations</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/api/v2/pokemon-species/{name}<em>evolution_chain.url yahin milta hai</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/api/v2/evolution-chain/{id}<em>Nested evolution tree</em></div>
+      </div>
+
+      <h3>Starter code</h3>
+      <script type="text/plain" data-code data-lang="js" data-name="pokedex.js">
+const API = "https://pokeapi.co/api/v2";
+const cache = new Map();
+
+async function getPokemon(nameOrId) {
+  const key = String(nameOrId).toLowerCase();
+  if (cache.has(key)) return cache.get(key);          // immutable data -> cache forever
+
+  const res = await fetch(`${API}/pokemon/${key}`);
+  if (!res.ok) throw new Error(`Pokemon not found (${res.status})`);
+  const data = await res.json();
+  cache.set(key, data);
+  return data;
+}
+
+// Type filter: 1 call mein us type ke saare names
+const { pokemon } = await fetch(`${API}/type/fire`).then(r => r.json());
+const names = pokemon.map(p => p.pokemon.name);
+
+// Detail calls ko batches mein chalao (1000 ek saath nahi)
+async function inBatches(items, size, fn) {
+  const out = [];
+  for (let i = 0; i < items.length; i += size) {
+    out.push(...await Promise.all(items.slice(i, i + size).map(fn)));
+  }
+  return out;
+}
+const cards = await inBatches(names.slice(0, 40), 20, getPokemon);
+
+// Evolution chain = tree, to recursion
+function flatten(node, out = []) {
+  out.push(node.species.name);
+  node.evolves_to.forEach(child => flatten(child, out));
+  return out;
+}
+      </script>
+
+      <div class="live" data-url="https://pokeapi.co/api/v2/pokemon/pikachu" data-pick="id,name,height,weight,types">
+        <button type="button">▶ Live try: Pikachu</button><span class="hint">real API call, browser se</span>
+        <pre hidden></pre>
+      </div>
+
+      <h3>Project spec</h3>
+      <div class="tiers">
+        <div class="tier t1"><span class="lab">MVP · DAY 1</span><ul>
+          <li>Paginated grid + search by name</li>
+          <li>Detail page: stats, types, sprite</li>
+          <li>404 state for wrong names</li>
+        </ul></div>
+        <div class="tier t2"><span class="lab">LEVEL-UP · DAY 2</span><ul>
+          <li>Type filter chips (dual-type = set intersection)</li>
+          <li>Stat bars / radar chart</li>
+          <li>Evolution chain view</li>
+          <li>Favorites</li>
+        </ul></div>
+        <div class="tier t3"><span class="lab">STRETCH</span><ul>
+          <li>Team builder: type weakness coverage via <code>damage_relations</code></li>
+          <li>Same data via GraphQL (beta)</li>
+        </ul></div>
+      </div>
+
+      <h3>Concepts jo demonstrate honge</h3>
+      <div class="tags"><span class="tag-pill">N+1 problem</span><span class="tag-pill">memoization</span><span class="tag-pill">Promise.all batching</span><span class="tag-pill">recursion / trees</span><span class="tag-pill">set intersection</span><span class="tag-pill">pagination</span></div>
+
+      <h3>Gotchas</h3>
+      <div class="warn"><ul>
+        <li>List endpoint sirf <code>name</code> + <code>url</code> deta hai. Cards ke liye har Pokémon ki detail chahiye — yahi N+1 problem hai. Id URL se nikalo: <code>url.split("/").filter(Boolean).pop()</code>.</li>
+        <li>Fair use rule: responses locally cache karo. Abuse karne wale IP ban ho sakte hain. Data immutable hai, to localStorage ya IndexedDB mein permanently cache kar do.</li>
+        <li>Names lowercase-hyphenated hain (<code>mr-mime</code>, <code>ho-oh</code>) — user input normalise karo.</li>
+        <li>1000 requests ek saath mat bhejo — 20–30 ke batches mein <code>Promise.all</code>.</li>
+        <li>GraphQL endpoint (<code>graphql.pokeapi.co/v1beta2</code>) beta hai: sirf POST, 100 calls/hr per IP, aur kabhi bhi change ho sakta hai. Core feature uski dependency pe mat banao.</li>
+      </ul></div>
+
+      <div class="interview"><b>Interview mein bolna</b>“List endpoint N+1 problem create karta hai, isliye detail calls ko batches mein <code>Promise.all</code> kiya aur memory + localStorage cache lagaya. Evolution chain recursive tree hai, to DFS se flatten kiya.”</div>
+    </div>
+  </section>
+
+  <!-- ================= 04 NASA ================= -->
+  <section id="nasa" style="--c:var(--nasa)">
+    <div class="api-head">
+      <div class="api-num">04</div>
+      <div><h2>NASA APIs</h2><p class="proj">Project: <b>Space dashboard</b> 🚀</p></div>
+    </div>
+    <div class="api-wrap">
+      <p>Ek key se APOD, asteroids, Earth imagery sab chalta hai. Free key <b>api.nasa.gov</b> pe email se turant milti hai, aur test ke liye <code>DEMO_KEY</code> hai. Yeh project <b>rate limits, retries aur data visualization</b> sikhata hai.</p>
+
+      <div class="facts">
+        <div class="fact"><span>AUTH</span><b>Free key · DEMO_KEY</b></div>
+        <div class="fact"><span>FREE LIMIT</span><b>DEMO 30/hr, 50/day · key 1,000/hr</b></div>
+        <div class="fact"><span>TERMS</span><b>Open data · image credit do</b></div>
+        <div class="fact"><span>LEVEL</span><b>Intermediate</b></div>
+      </div>
+
+      <h3>Endpoints</h3>
+      <div class="ep">
+        <div class="m">GET</div><div class="p">api.nasa.gov/planetary/apod<em>Astronomy Picture of the Day (<code>date</code>, <code>count</code>, range support)</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">api.nasa.gov/neo/rest/v1/feed?start_date=&amp;end_date=<em>Near-Earth asteroids (max 7 din ka range)</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">api.nasa.gov/EPIC/api/natural<em>Earth ki images (DSCOVR satellite se)</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">images-api.nasa.gov/search?q=&amp;media_type=image<em>NASA Image Library — keyless search</em></div>
+      </div>
+
+      <h3>Starter code</h3>
+      <script type="text/plain" data-code data-lang="js" data-name="space.js">
+const KEY = "DEMO_KEY";            // sirf dev ke liye. Production mein apni key, proxy ke peeche
+const base = "https://api.nasa.gov";
+
+const [apod, neo] = await Promise.all([
+  fetch(`${base}/planetary/apod?api_key=${KEY}`),
+  fetch(`${base}/neo/rest/v1/feed?start_date=2026-11-10&end_date=2026-11-16&api_key=${KEY}`),
+]);
+
+// Rate-limit headers UI mein dikha sakte ho
+console.log("Remaining:", apod.headers.get("x-ratelimit-remaining"));
+
+const apodData = await apod.json();
+// APOD kabhi video hota hai (YouTube embed), image nahi
+const isVideo = apodData.media_type === "video";
+
+const neoData = await neo.json();
+const asteroids = Object.values(neoData.near_earth_objects).flat().map(a => ({
+  name: a.name,
+  hazardous: a.is_potentially_hazardous_asteroid,
+  diameterM: a.estimated_diameter.meters.estimated_diameter_max,
+  kmh: parseFloat(a.close_approach_data[0].relative_velocity.kilometers_per_hour),  // strings aate hain
+  missKm: parseFloat(a.close_approach_data[0].miss_distance.kilometers),
+}));
+      </script>
+
+      <div class="live" data-url="https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY" data-pick="date,title,media_type,copyright,url">
+        <button type="button">▶ Live try: aaj ki APOD (DEMO_KEY)</button><span class="hint">DEMO_KEY shared hai — limit hit ho sakti hai</span>
+        <pre hidden></pre>
+      </div>
+
+      <h3>Project spec</h3>
+      <div class="tiers">
+        <div class="tier t1"><span class="lab">MVP · DAY 1</span><ul>
+          <li>APOD hero section + date picker</li>
+          <li>Video vs image handling</li>
+          <li>Loading + error states</li>
+        </ul></div>
+        <div class="tier t2"><span class="lab">LEVEL-UP · DAY 2</span><ul>
+          <li>Asteroid table sorted by miss distance</li>
+          <li>Hazard badge + size-vs-speed scatter chart</li>
+          <li>Remaining API quota meter</li>
+        </ul></div>
+        <div class="tier t3"><span class="lab">STRETCH</span><ul>
+          <li>EPIC Earth slideshow</li>
+          <li>NASA Image Library search page</li>
+          <li>Retry + cached fallback</li>
+        </ul></div>
+      </div>
+
+      <h3>Concepts jo demonstrate honge</h3>
+      <div class="tags"><span class="tag-pill">API key management</span><span class="tag-pill">Promise.all</span><span class="tag-pill">rate-limit headers</span><span class="tag-pill">retry + backoff</span><span class="tag-pill">data viz</span><span class="tag-pill">date handling</span></div>
+
+      <h3>Gotchas</h3>
+      <div class="warn"><ul>
+        <li><code>DEMO_KEY</code> IP-shared hai (30/hr, 50/day), development mein jaldi khatam hoti hai. Apni free key lo — limit 1,000/hr ho jaati hai.</li>
+        <li>APOD kabhi <code>media_type: "video"</code> hota hai — <code>&lt;img&gt;</code> toot jayega, iframe render karo. <code>hdurl</code> optional hai aur <code>copyright</code> field ho to credit dikhao.</li>
+        <li>APOD ki date US time follow karti hai. India mein tumhari “aaj ki date” US se aage ho sakti hai, aur future date pe error aata hai. Date na do, default use karo.</li>
+        <li>NeoWs feed ka date range max 7 din ka hai, aur numeric values strings mein aati hain — <code>parseFloat</code>.</li>
+        <li><b>Mars Rover Photos:</b> kuch sources ise deprecated bata rahe hain, jabki NASA portal abhi bhi listing dikhata hai. Build se pehle ek test call karo aur fallback (APOD/EPIC) ready rakho.</li>
+        <li>NASA endpoints kabhi-kabhi 5xx dete hain — retry with backoff aur last good response cache rakho.</li>
+      </ul></div>
+
+      <div class="interview"><b>Interview mein bolna</b>“Rate-limit headers padh ke UI mein remaining quota dikhaya, 429/5xx pe exponential backoff lagaya, aur last successful APOD cache karke graceful fallback diya.”</div>
+    </div>
+  </section>
+
+  <!-- ================= 05 GITHUB ================= -->
+  <section id="github" style="--c:var(--gh)">
+    <div class="api-head">
+      <div class="api-num">05</div>
+      <div><h2>GitHub API</h2><p class="proj">Project: <b>GitHub Profile Analyzer</b> 🔥</p></div>
+    </div>
+    <div class="api-wrap">
+      <p>Portfolio mein yeh sabse zyada chamakta hai kyunki <b>recruiter apna ya kisi ka bhi username daal ke result dekh sakta hai</b>. Ab tak ke saare concepts yahan milte hain: pagination, rate-limit handling, aur N+1 se bachna.</p>
+
+      <div class="facts">
+        <div class="fact"><span>AUTH</span><b>Optional token</b></div>
+        <div class="fact"><span>FREE LIMIT</span><b>60/hr → 5,000/hr (token)</b></div>
+        <div class="fact"><span>TERMS</span><b>Public data · GitHub ToS</b></div>
+        <div class="fact"><span>LEVEL</span><b>Intermediate</b></div>
+      </div>
+
+      <h3>Endpoints</h3>
+      <div class="ep">
+        <div class="m">GET</div><div class="p">api.github.com/users/{username}<em>Profile: followers, public_repos, bio</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/users/{username}/repos?per_page=100&amp;page=<em>Repos — har repo mein primary <code>language</code>, stars, forks</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/repos/{owner}/{repo}/languages<em>Bytes per language (accurate, par 1 call per repo)</em></div>
+        <div class="gap"></div>
+        <div class="m">GET</div><div class="p">/rate_limit<em>Current quota check</em></div>
+        <div class="gap"></div>
+        <div class="m">POST</div><div class="p">/graphql<em>Ek query mein sab kuch — par token compulsory</em></div>
+      </div>
+
+      <h3>Starter code</h3>
+      <script type="text/plain" data-code data-lang="js" data-name="analyzer.js">
+async function fetchAllRepos(user) {
+  const repos = [];
+  for (let page = 1; ; page++) {
+    const res = await fetch(
+      `https://api.github.com/users/${user}/repos?per_page=100&page=${page}`,
+      { headers: { Accept: "application/vnd.github+json" } }
+    );
+
+    if (res.status === 404) throw new Error("User not found");
+    if (res.status === 403 || res.status === 429) {          // rate limit = 403/429, 401 nahi
+      const reset = Number(res.headers.get("x-ratelimit-reset")) * 1000;
+      throw new Error(`Rate limit hit. Resets at ${new Date(reset).toLocaleTimeString()}`);
+    }
+
+    const batch = await res.json();
+    repos.push(...batch);
+    if (batch.length < 100) break;                           // last page
+  }
+  return repos;
+}
+
+const repos = await fetchAllRepos("octocat");
+
+// Language -> repo count (forks hata ke, 1 API call se)
+const langCount = repos
+  .filter(r => !r.fork && r.language)
+  .reduce((acc, r) => {
+    acc[r.language] = (acc[r.language] ?? 0) + 1;
+    return acc;
+  }, {});
+
+const totalStars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
+      </script>
+
+      <div class="live" data-url="https://api.github.com/users/octocat" data-pick="login,name,public_repos,followers,created_at">
+        <button type="button">▶ Live try: octocat ka profile</button><span class="hint">remaining quota bhi dikhega</span>
+        <pre hidden></pre>
+      </div>
+
+      <h3>Project spec</h3>
+      <div class="tiers">
+        <div class="tier t1"><span class="lab">MVP · DAY 1</span><ul>
+          <li>Username input + profile card</li>
+          <li>Language chart (Chart.js / Recharts)</li>
+          <li>404 + rate-limit error states</li>
+        </ul></div>
+        <div class="tier t2"><span class="lab">LEVEL-UP · DAY 2</span><ul>
+          <li>Top repos by stars, total stars/forks</li>
+          <li>Shareable URL (<code>?user=octocat</code>)</li>
+          <li>Recent activity from <code>pushed_at</code></li>
+          <li>ETag caching</li>
+        </ul></div>
+        <div class="tier t3"><span class="lab">STRETCH</span><ul>
+          <li>Compare two users side by side</li>
+          <li>GraphQL contributions (via proxy)</li>
+          <li>SVG stats-card endpoint for READMEs</li>
+        </ul></div>
+      </div>
+
+      <h3>Concepts jo demonstrate honge</h3>
+      <div class="tags"><span class="tag-pill">pagination</span><span class="tag-pill">rate-limit headers</span><span class="tag-pill">ETag / 304</span><span class="tag-pill">N+1 avoidance</span><span class="tag-pill">REST vs GraphQL</span><span class="tag-pill">reduce / aggregation</span><span class="tag-pill">URL state</span></div>
+
+      <h3>Gotchas</h3>
+      <div class="warn"><ul>
+        <li><b>N+1 trap:</b> har repo ke liye <code>/languages</code> call karoge to 30 repos = 30 calls, aur unauthenticated 60/hr limit aadhi khatam. Repo list ka <code>language</code> field use karo (1 call), bytes-level breakdown sirf top 5 repos ke liye optional rakho.</li>
+        <li>Unauthenticated limit 60/hr per IP hai, token se 5,000/hr. Token frontend mein mat daalo — proxy ya serverless function use karo.</li>
+        <li>Rate limit hit hone par <code>403</code> (ya <code>429</code>) aata hai. <code>x-ratelimit-remaining</code> aur <code>x-ratelimit-reset</code> headers padho.</li>
+        <li>Forks filter karo (<code>!r.fork</code>), warna chart doosron ke code se bhar jayega. <code>language</code> null bhi ho sakta hai.</li>
+        <li>Search API ki limit alag hai: 10/min unauthenticated, 30/min authenticated.</li>
+        <li>Conditional requests (<code>If-None-Match</code> + ETag) pe <code>304</code> response rate limit mein count nahi hota — repeat searches ke liye use karo.</li>
+        <li>GraphQL API public data ke liye bhi token maangti hai, isliye REST se shuru karo aur GraphQL ko stretch rakho.</li>
+      </ul></div>
+
+      <div class="interview"><b>Interview mein bolna</b>“Per-repo <code>/languages</code> calls N+1 hote hain aur 60/hr limit mein nahi chalte. Isliye repo list ke <code>language</code> field se aggregate kiya, aur bytes-level breakdown sirf top 5 repos ke liye optional rakha.”</div>
+    </div>
+  </section>
+
+  <!-- ================= SECURITY ================= -->
+  <section id="security">
+    <div class="sec-head"><h2>API key frontend mein mat chhodo</h2><span class="tag">TMDB + NASA + GitHub token</span></div>
+    <p><code>VITE_</code> ya <code>REACT_APP_</code> prefix wali env variable bhi final bundle mein chali jaati hai — DevTools → Network tab mein koi bhi dekh leta hai. Keyless APIs aur <code>DEMO_KEY</code> pe koi issue nahi, par <b>TMDB token, NASA key aur GitHub token ke liye ek chhota serverless proxy</b> banao. Yeh khud ek interview talking point hai.</p>
+    <script type="text/plain" data-code data-lang="js" data-name="api/tmdb.js (Vercel function)">
+// Key server pe rehti hai (process.env), browser ko kabhi nahi milti
+const ALLOWED = ["trending/", "search/movie", "movie/", "genre/movie/list"];
+
+export default async function handler(req, res) {
+  const { path, ...params } = req.query;
+  if (!path || !ALLOWED.some(p => path.startsWith(p))) {
+    return res.status(400).json({ error: "Path not allowed" });
+  }
+
+  const r = await fetch(
+    `https://api.themoviedb.org/3/${path}?${new URLSearchParams(params)}`,
+    { headers: { Authorization: `Bearer ${process.env.TMDB_TOKEN}` } }
+  );
+
+  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=600");  // CDN cache
+  res.status(r.status).json(await r.json());
+}
+    </script>
+    <ul class="list">
+      <li><b>Path allowlist</b> rakho, warna koi bhi tumhare proxy se kuch bhi call kar sakta hai.</li>
+      <li><b><code>s-maxage</code> caching</b> se CDN repeat requests handle karta hai — tumhara rate limit bhi bachta hai.</li>
+      <li><code>.env</code> ko <code>.gitignore</code> mein daalo. Key leak ho jaye to turant rotate karo.</li>
+      <li>Same pattern Vercel, Netlify Functions ya Cloudflare Workers pe chalta hai.</li>
+    </ul>
+  </section>
+
+  <!-- ================= PLAN ================= -->
+  <section id="plan">
+    <div class="sec-head"><h2>5 weekends ka plan</h2><span class="tag">difficulty order, reel order nahi</span></div>
+    <div class="plan">
+      <div class="wk" style="--c:var(--poke)"><div class="w">WEEKEND 1</div><div><div class="h">PokéAPI<small>fetch, caching, batching</small></div><div class="b">Sat: list + detail page. Sun: type filter, error states, deploy.</div></div></div>
+      <div class="wk" style="--c:var(--meteo)"><div class="w">WEEKEND 2</div><div><div class="h">Open-Meteo<small>dependent requests, debounce</small></div><div class="b">Sat: geocoding → forecast flow. Sun: AbortController, geolocation, deploy.</div></div></div>
+      <div class="wk" style="--c:var(--tmdb)"><div class="w">WEEKEND 3</div><div><div class="h">TMDB<small>auth, proxy, infinite scroll</small></div><div class="b">Sat: trending + search + detail. Sun: serverless proxy, watchlist, attribution.</div></div></div>
+      <div class="wk" style="--c:var(--nasa)"><div class="w">WEEKEND 4</div><div><div class="h">NASA<small>rate limits, retries, charts</small></div><div class="b">Sat: APOD + asteroid table. Sun: scatter chart, quota meter, backoff.</div></div></div>
+      <div class="wk" style="--c:var(--gh)"><div class="w">WEEKEND 5</div><div><div class="h">GitHub Analyzer<small>capstone: pagination, N+1, charts</small></div><div class="b">Sat: repos fetch + aggregation. Sun: charts, shareable URL, ETag, polish. Isse portfolio ka hero project banao.</div></div></div>
+    </div>
+    <p class="note">Har weekend ka formula: <b>Sat = data layer + UI</b>, <b>Sun = error states + deploy + README</b>. Deploy ke bina weekend complete nahi maanna.</p>
+  </section>
+
+  <!-- ================= README ================= -->
+  <section id="readme">
+    <div class="sec-head"><h2>README template</h2><span class="tag">recruiter pehle yahi padhta hai</span></div>
+    <p>Code se pehle README khulta hai. Yeh structure copy karo aur apne project ke hisaab se bharo:</p>
+    <script type="text/plain" data-code data-lang="md" data-name="README.md">
+# 🌦️ SkyCast — Weather app
+
+City search + 7-day forecast built on the Open-Meteo API.
+
+🔗 Live: https://your-app.vercel.app
+🎥 Demo: (GIF yahan)
+
+## Features
+- Debounced city search with suggestions
+- Current weather, hourly chart, 7-day forecast
+- °C/°F toggle, "use my location"
+
+## Tech stack
+React · Vite · Tailwind · Open-Meteo API · Vercel
+
+## Architecture
+Browser → debounced search → Geocoding API → Forecast API → normalize() → UI
+
+## Engineering decisions
+- Debounce (300ms) + AbortController to avoid race conditions
+- Cache last 5 searches in localStorage
+- Handled empty, error and loading states for every request
+
+## What I'd improve
+- Offline support (PWA), unit tests for the mapper layer
+
+## Credits
+Weather data by Open-Meteo.com (CC BY 4.0)
+    </script>
+    <ul class="list">
+      <li>Live link + GIF sabse upar rakho.</li>
+      <li>“Engineering decisions” section hi tumhe tutorial-followers se alag karta hai.</li>
+      <li>API attribution zaroor likho (Open-Meteo aur TMDB mein mandatory hai).</li>
+    </ul>
+  </section>
+
+  <!-- ================= REALITY CHECK ================= -->
+  <section id="reality">
+    <div class="sec-head"><h2>Reality check</h2><span class="tag">honest baat</span></div>
+    <div class="reality big">
+      <b>5 projects banane se job pakki nahi hoti.</b> Yeh projects sirf tumhare saboot hain ki tum API integrate kar sakte ho, errors handle kar sakte ho aur cheezein deploy kar sakte ho.
+      <ul>
+        <li>Recruiters projects ke saath <b>DSA, fundamentals, communication aur interview performance</b> bhi dekhte hain.</li>
+        <li>Quality quantity se zyada matter karti hai. 2 achhe, deployed aur samjhe hue projects 5 half-baked projects se behtar hain.</li>
+        <li>Jo bhi project daalo, uska har hissa <b>khud explain kar pao</b>. Interviewer kuch bhi puchh sakta hai.</li>
+        <li>Internships, referrals, open source aur consistent applying bhi utne hi important hain.</li>
+      </ul>
+      Isse ek strong step samjho, shortcut nahi. 💪
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div class="handle"><b>@</b>ranchofullstack</div>
+      <div class="tagline">Save karo · Build karo · Deploy karo 🚀</div>
+    </div>
+    <p class="fine">Yeh guide sirf educational hai aur job ya selection ki guarantee nahi deti. Rate limits aur terms Nov 2026 tak verify kiye gaye hain aur provider kabhi bhi badal sakta hai. Deploy se pehle har API ki official documentation dekh lena.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- tiny JS syntax highlighter ---------- */
+  function highlight(code){
+    var esc = code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var re = /(\/\/.*$)|(`(?:[^`\\]|\\.)*`|"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*')|\b(const|let|var|await|async|function|return|if|for|break|throw|new|export|default|import|from|of)\b|\b(\d+(?:\.\d+)?)\b/gm;
+    return esc.replace(re, function(m,c,s,k,n){
+      if(c) return '<span class="tc">'+c+'</span>';
+      if(s) return '<span class="ts">'+s+'</span>';
+      if(k) return '<span class="tk">'+k+'</span>';
+      return '<span class="tn">'+n+'</span>';
+    });
+  }
+
+  /* ---------- build code blocks ---------- */
+  document.querySelectorAll('script[data-code]').forEach(function(s){
+    var lang = s.getAttribute('data-lang') || 'js';
+    var name = s.getAttribute('data-name') || lang;
+    var raw = s.textContent.replace(/^\n/,'').replace(/\s+$/,'');
+    var wrap = document.createElement('div');
+    wrap.className = 'code';
+    wrap.innerHTML = '<div class="code-bar"><span></span><button type="button">Copy</button></div><pre><code></code></pre>';
+    wrap.querySelector('.code-bar span').textContent = name;
+    var codeEl = wrap.querySelector('code');
+    if(lang === 'js') codeEl.innerHTML = highlight(raw); else codeEl.textContent = raw;
+    var btn = wrap.querySelector('button');
+    btn.addEventListener('click', function(){
+      var done = function(t){ btn.textContent = t; setTimeout(function(){ btn.textContent = 'Copy'; }, 1500); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(raw).then(function(){ done('Copied ✓'); }, function(){ done('Select + copy'); });
+      } else { done('Select + copy'); }
+    });
+    s.replaceWith(wrap);
+  });
+
+  /* ---------- live API tries ---------- */
+  document.querySelectorAll('.live').forEach(function(box){
+    var btn = box.querySelector('button');
+    var out = box.querySelector('pre');
+    btn.addEventListener('click', async function(){
+      btn.disabled = true;
+      out.hidden = false;
+      out.textContent = 'Loading…';
+      var t0 = performance.now();
+      try{
+        var res = await fetch(box.getAttribute('data-url'));
+        var ms = Math.round(performance.now() - t0);
+        var rem = res.headers.get('x-ratelimit-remaining');
+        var body = null;
+        try{ body = await res.json(); }catch(e){}
+        var shown = body;
+        var pick = box.getAttribute('data-pick');
+        if(body && pick && res.ok){
+          shown = {};
+          pick.split(',').forEach(function(k){ if(k in body) shown[k] = body[k]; });
+        }
+        var txt = JSON.stringify(shown, null, 2) || '(empty response)';
+        if(txt.length > 1400) txt = txt.slice(0,1400) + '\n…';
+        out.textContent = '// ' + res.status + ' ' + (res.ok ? 'OK' : 'ERROR') + ' · ' + ms + 'ms' +
+          (rem ? ' · x-ratelimit-remaining: ' + rem : '') + '\n' + txt;
+      }catch(e){
+        out.textContent = '// Request fail hui (network ya CORS). Apne browser console mein try karo.\n// ' + e.message;
+      }
+      btn.disabled = false;
+    });
+  });
+
+  /* ---------- active nav chip ---------- */
+  var links = {};
+  document.querySelectorAll('#nav a').forEach(function(a){ links[a.getAttribute('href').slice(1)] = a; });
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          Object.values(links).forEach(function(l){ l.classList.remove('on'); });
+          var a = links[e.target.id];
+          if(a){
+            a.classList.add('on');
+            var bar = a.parentElement;
+            bar.scrollTo({ left: a.offsetLeft - bar.clientWidth/2 + a.clientWidth/2, behavior: 'smooth' });
+          }
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(links).forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) io.observe(el);
+    });
+  }
+})();
+</script>
+</body>
+</html>
